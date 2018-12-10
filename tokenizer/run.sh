@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Download the corpus and place the extracted blogs directory in this directory
+# before executing this script.
+
 set -e
 
 javacc NLG.jj
