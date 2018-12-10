@@ -77,7 +77,7 @@
 			if(token.equals("\t"))
 				token = "tab";
 
-  			System.out.printf("Token:  %15s    Type:  %15s  %n" , token, LMPTokenizer.tokenImage[ t.kind ]  );
+  			System.out.printf("Token:  %15s    Type:  %15s  %n" , token, BlogTokenizer.tokenImage[ t.kind ]  );
   			t = u.getNextToken();
   		}
 
