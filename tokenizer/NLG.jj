@@ -37,7 +37,7 @@
 		{
 			tokenize(file, outdir);
 			index++;
-			if(index >= 1)
+			if(index >= 10)
 				System.exit(0);
 		}
 	}
