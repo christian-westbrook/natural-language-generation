@@ -91,7 +91,6 @@
  SKIP :
  {
 
-  < SPACE 		: (" "|"\\s")+ >
 | < TAB   		: ("\t")+ >
 | < CR    		: ("\r")+ >
 | < NL          : ("\n")+ >
@@ -107,6 +106,7 @@ TOKEN :
 | < DATETAG     : ("<date>" (["*"])+ "</date>") >
 | < HTML		: ("<" (["a"-"z","A"-"Z"])+ ">") >
 | < LINK        : "urlLink" >
+| < SPACE 		: (" "|"\\s")+ >
 | < WORD  : (["a"-"z","A"-"Z"])+ >
 | < MISC  : ~[] >
 
