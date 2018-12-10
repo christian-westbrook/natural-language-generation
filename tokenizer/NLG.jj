@@ -1,0 +1,109 @@
+/**
+ *	This JavaCC class parses blog documents from the Blog Authorship Corpus.
+ *
+ *	@author		Christian Westbrook
+ *	@version	Pre-release
+ */
+
+ options
+ {
+ 	static = false;
+ }
+
+ PARSER_BEGIN(BlogTokenizer)
+
+ import java.io.*;
+
+ public class BlogTokenizer
+ {
+ 	public static void main(String[] args) throws ParseException, IOException
+	{
+		File indir  = new File("./input/");
+		File outdir = new File("./output/");
+
+		if(!indir.exists())
+			indir.mkdir();
+
+		if(!outdir.exists())
+			outdir.mkdir();
+
+		File[] files = indir.listFiles();
+
+		int index = 0;
+		for(File file : files)
+		{
+			tokenize(file, outdir);
+			index++;
+			if(index >= 100)
+				System.exit(0);
+		}
+	}
+
+	private static void tokenize(File input, File outdir) throws ParseException, IOException
+  	{
+		BufferedReader br = new BufferedReader(new FileReader(input));
+		BlogTokenizer u = new BlogTokenizer(br);
+  		Token t;
+
+  		t = u.getNextToken();
+
+		String outpath = outdir.getName();
+		if(outpath.charAt(outpath.length() - 1) != '/')
+			outpath = outpath + "/";
+
+		String outputFileName = outpath + input.getName() + ".out";
+  		File output = new File(outputFileName);
+
+		if(output.exists())
+			output.delete();
+
+  		output.createNewFile();
+  		FileWriter fw = new FileWriter(output);
+  		BufferedWriter bw = new BufferedWriter(fw);
+
+  		while ( t.kind != BlogTokenizerConstants.EOF )
+  		{
+			if(BlogTokenizer.tokenImage[ t.kind ].equalsIgnoreCase("<WORD>"))
+				bw.write(t.image + "\n");
+
+  	  		String token = t.image;
+			if(token.equals("\n"))
+				token = "newline";
+			if(token.equals("\r"))
+				token = "carraige return";
+			if(token.equals("\t"))
+				token = "tab";
+
+  			System.out.printf("Token:  %15s    Type:  %15s  %n" , token, LMPTokenizer.tokenImage[ t.kind ]  );
+  			t = u.getNextToken();
+  		}
+
+  		br.close();
+  		bw.close();
+	}
+ }
+
+ PARSER_END(BlogTokenizer)
+
+ SKIP :
+ {
+
+  < SPACE 		: (" "|"\\s")+ >
+| < TAB   		: ("\t")+ >
+| < CR    		: ("\r")+ >
+| < NL          : ("\n")+ >
+| < OPERATOR 	: ["+","-","*","/"]|("&gt;") >
+| < PUNCTUATION	: (","|"?"|"!"|":"|"'"|"-"|".")+>
+| < SPECIAL     : ("&"(["a"-"z","A"-"Z"])+";"|"&#"(["0"-"9"])+";") >
+| < HTML		: ("<" (["a"-"z","A"-"Z"])+ ">") >
+| < LINK        : "urlLink" >
+
+}
+
+TOKEN :
+{
+
+| < WORD  : (["a"-"z","A"-"Z"])+ >
+| < MISC  : ~[] >
+
+}
