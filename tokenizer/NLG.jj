@@ -18,8 +18,11 @@
  {
  	public static void main(String[] args) throws ParseException, IOException
 	{
-		File indir  = new File("./input/");
-		File outdir = new File("./output/");
+        if(args.length != 2)
+            System.exit(1);
+
+		File indir  = new File(args[0]);
+		File outdir = new File(args[1]);
 
 		if(!indir.exists())
 			indir.mkdir();
