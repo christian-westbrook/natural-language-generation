@@ -20,13 +20,13 @@ public class Split
 			if(n <= 80 && training < 1500)
 			{
 				file.renameTo(new File("./training/" + id + ".txt"));
+				training++;
 			}
 			else
 			{
 				file.renameTo(new File("./testing/" + id + ".txt"));
-				training++;
 			}
-			
+
 			id++;
 		}
 	}
