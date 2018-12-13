@@ -2,7 +2,7 @@
  *	This JavaCC class parses blog documents from the Blog Authorship Corpus.
  *
  *	@author		Christian Westbrook
- *	@version	Pre-release
+ *	@version	v1.0 pre-release
  */
 
  options
